@@ -2,6 +2,9 @@ package co.lockpass.tvapi.loggerwrapper;
 
 import org.slf4j.LoggerFactory;
 
+/**
+ * slf4j logger with colors
+ */
 public class Logger {
 
     private final org.slf4j.Logger logger;
@@ -10,6 +13,7 @@ public class Logger {
     private final String RED = "\u001b[31m";
     private final String BLUE = "\u001b[34m";
     private final String RESET = "\u001b[0m";
+    private final String ORANGE ="\u001b[33m";
 
     public <T> Logger(Class<T> theClass) {
         logger = LoggerFactory.getLogger(theClass);
@@ -25,6 +29,10 @@ public class Logger {
 
     public void start(String s) {
         logger.info(BLUE + s + RESET);
+    }
+
+    public void warn(String s) {
+        logger.warn(ORANGE + s + RESET);
     }
 
     public void error(String s) {

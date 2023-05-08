@@ -1,25 +1,26 @@
 package co.lockpass.tvapi.models;
 
+import co.lockpass.tvapi.selenium.SeleniumInstruction;
+
+import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Model class for a request to watch something
+ */
 public class WatchRequest {
 
-    private String url;
-    private List<String> instructions;
+    private SeleniumInstruction[] instructions;
 
     public WatchRequest() {}
 
-    public WatchRequest(String url, List<String> instructions) {
-        this.url = url;
-        this.instructions = instructions;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public List<String> getInstructions() {
+    public SeleniumInstruction[] getInstructions() {
         return instructions;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(instructions);
     }
 
 }
