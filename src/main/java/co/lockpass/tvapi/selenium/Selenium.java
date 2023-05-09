@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.time.Duration;
 
-@Component("seleniumUtil")
+@Component("selenium")
 public class Selenium {
 
     private final Logger logger = LoggerFactory.getLogger(Selenium.class);

@@ -5,6 +5,7 @@ import co.lockpass.tvapi.loggerwrapper.LoggerFactory;
 import co.lockpass.tvapi.models.WatchRequest;
 import co.lockpass.tvapi.selenium.SeleniumManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class WatchController {
     private final Logger logger = LoggerFactory.getLogger(WatchController.class);
 
     @Autowired
+    @Qualifier("seleniumManager")
     private SeleniumManager seleniumManager;
 
     @GetMapping("/ping")

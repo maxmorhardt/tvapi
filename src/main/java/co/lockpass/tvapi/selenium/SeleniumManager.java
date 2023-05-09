@@ -3,6 +3,7 @@ package co.lockpass.tvapi.selenium;
 import co.lockpass.tvapi.loggerwrapper.Logger;
 import co.lockpass.tvapi.loggerwrapper.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +15,7 @@ public class SeleniumManager {
     private final Logger logger = LoggerFactory.getLogger(SeleniumManager.class);
 
     @Autowired
+    @Qualifier("selenium")
     private Selenium selenium;
 
     /**
