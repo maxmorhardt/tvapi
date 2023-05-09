@@ -4,6 +4,7 @@ import co.lockpass.tvapi.loggerwrapper.Logger;
 import co.lockpass.tvapi.loggerwrapper.LoggerFactory;
 import co.lockpass.tvapi.models.WatchRequest;
 import co.lockpass.tvapi.selenium.SeleniumManager;
+import co.lockpass.tvapi.selenium.SeleniumType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -31,8 +32,7 @@ public class WatchController {
             return new ResponseEntity<>("invalid request for youtube", HttpStatus.BAD_REQUEST);
         }
         logger.info("received request with url " + url + " and request " + request);
-        logger.start("calling selenium");
-        seleniumManager.runAllInstructions(request.getInstructions(), url);
+        seleniumManager.runAllInstructions(request.getInstructions(), url, SeleniumType.YOUTUBE);
         return new ResponseEntity<>("request completed", HttpStatus.OK);
     }
 

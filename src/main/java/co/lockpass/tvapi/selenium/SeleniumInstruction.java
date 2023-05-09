@@ -4,5 +4,7 @@ public enum SeleniumInstruction {
     INIT,
     VISIT,
     FULLSCREEN,
-    QUIT;
+    QUIT,
+    START,
+    PAUSE
 }

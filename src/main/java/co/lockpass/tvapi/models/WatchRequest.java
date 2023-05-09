@@ -12,6 +12,10 @@ public class WatchRequest {
 
     private SeleniumInstruction[] instructions;
 
+    public WatchRequest(SeleniumInstruction[] instructions) {
+        this.instructions = instructions;
+    }
+
     public WatchRequest() {}
 
     public SeleniumInstruction[] getInstructions() {

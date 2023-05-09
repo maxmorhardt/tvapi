@@ -16,7 +16,7 @@ import java.io.File;
 import java.time.Duration;
 
 @Component("selenium")
-public class Selenium {
+public abstract class Selenium {
 
     private final Logger logger = LoggerFactory.getLogger(Selenium.class);
 
@@ -33,6 +33,9 @@ public class Selenium {
         init();
     }
 
+    /**
+     * Initializes driver with profile and geckodriver
+     */
     public void init() {
         logger.start("======== initializing selenium ========");
 
@@ -61,6 +64,11 @@ public class Selenium {
         logger.success("======== completed selenium initialization ========");
     }
 
+    /**
+     * Visits a website
+     *
+     * @param url url to website
+     */
     public void visit(String url) {
         logger.start("visiting url: " + url);
         try {
@@ -72,6 +80,9 @@ public class Selenium {
         logger.success("successfully visited url: " + url);
     }
 
+    /**
+     * Quits the driver (can be initialized again)
+     */
     public void quit() {
         if (driver != null) {
             logger.start("======== quitting driver ========");
@@ -82,13 +93,21 @@ public class Selenium {
         }
     }
 
-    public void fullscreen() {
-        final int FIVE_SECONDS_IN_MS = 5000;
-        syncWait(FIVE_SECONDS_IN_MS);
-        sendKeysByTagName("f", "html");
-    }
+    public abstract void startVideo();
 
-    private void syncWait(int waitTimeMs) {
+    public abstract void pauseVideo();
+
+    /**
+     * Puts a video in full screen (needs to be overrided for different platforms)
+     */
+    public abstract void fullscreen();
+
+    /**
+     * Synchronously waits for a given period of time (good for slow loading websites)
+     *
+     * @param waitTimeMs time in milliseconds to wait
+     */
+    protected final void syncWait(int waitTimeMs) {
         synchronized (driver) {
             try {
                 driver.wait(waitTimeMs);
@@ -99,7 +118,13 @@ public class Selenium {
         }
     }
 
-    private void sendKeysByTagName(String keys, String tagName) {
+    /**
+     * Sends a string of text to a tag given an html tag name
+     *
+     * @param keys string of text to send
+     * @param tagName name of html tag
+     */
+    protected final void sendKeysByTagName(String keys, String tagName) {
         WebElement element = driver.findElement(By.tagName(tagName));
         element.sendKeys(keys);
     }

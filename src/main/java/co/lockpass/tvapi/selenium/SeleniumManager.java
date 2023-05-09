@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 /**
  * Handles selenium api calls
  */
-@Component("seleniumManager")
+@Component
 public class SeleniumManager {
 
     private final Logger logger = LoggerFactory.getLogger(SeleniumManager.class);
 
     @Autowired
-    @Qualifier("selenium")
+    private SeleniumFactory seleniumFactory;
     private Selenium selenium;
 
     /**
@@ -24,16 +24,14 @@ public class SeleniumManager {
      * @param instruction instruction to be run
      * @param url optional arg for url if a visit instruction is given
      */
-    private void runOneInstruction(SeleniumInstruction instruction, String... url) {
-        String urlStr = "";
-        if (url.length > 0) {
-            urlStr = url[0];
-        }
+    private void runOneInstruction(SeleniumInstruction instruction, String url) {
         switch (instruction) {
             case INIT -> selenium.init();
-            case VISIT -> selenium.visit(urlStr);
+            case VISIT -> selenium.visit(url);
             case QUIT -> selenium.quit();
             case FULLSCREEN -> selenium.fullscreen();
+            case START -> selenium.startVideo();
+            case PAUSE -> selenium.pauseVideo();
         }
     }
 
@@ -43,11 +41,8 @@ public class SeleniumManager {
      * @param instructions array of instructions to be run
      * @param url optional arg for url if a visit instruction is given
      */
-    public void runAllInstructions(SeleniumInstruction[] instructions, String... url) {
-        if (url.length > 1) {
-            logger.error("url param must be of length 0 or 1");
-            throw new IllegalArgumentException("url param must be of length 0 or 1");
-        }
+    public void runAllInstructions(SeleniumInstruction[] instructions, String url, SeleniumType type) {
+        selenium = seleniumFactory.getSelenium(type);
         for (SeleniumInstruction instruction : instructions) {
             runOneInstruction(instruction, url);
         }
