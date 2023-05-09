@@ -16,9 +16,9 @@ import java.io.File;
 import java.time.Duration;
 
 @Component("seleniumUtil")
-public class SeleniumUtil {
+public class Selenium {
 
-    private final Logger logger = LoggerFactory.getLogger(SeleniumUtil.class);
+    private final Logger logger = LoggerFactory.getLogger(Selenium.class);
 
     private final String DRIVER_PATH;
     private final String PROFILE_PATH;
@@ -27,7 +27,7 @@ public class SeleniumUtil {
 
     private WebDriver driver;
 
-    public SeleniumUtil(@Autowired Environment env) {
+    public Selenium(@Autowired Environment env) {
         this.DRIVER_PATH = env.getProperty("driver.path");
         this.PROFILE_PATH = env.getProperty("profile.path");
         init();
@@ -80,11 +80,6 @@ public class SeleniumUtil {
         } else {
             logger.warn("driver quit attempted but was null");
         }
-    }
-
-    public void startVideo() {
-        syncWait(2);
-        sendKeysByTagName(" ", "html");
     }
 
     public void fullscreen() {

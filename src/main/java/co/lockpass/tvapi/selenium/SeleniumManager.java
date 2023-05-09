@@ -14,7 +14,7 @@ public class SeleniumManager {
     private final Logger logger = LoggerFactory.getLogger(SeleniumManager.class);
 
     @Autowired
-    private SeleniumUtil seleniumUtil;
+    private Selenium selenium;
 
     /**
      * Runs a single selenium instruction by calling the appropriate method in selenium util
@@ -28,11 +28,11 @@ public class SeleniumManager {
             urlStr = url[0];
         }
         switch (instruction) {
-            case INIT -> seleniumUtil.init();
-            case VISIT -> seleniumUtil.visit(urlStr);
-            case QUIT -> seleniumUtil.quit();
-            case FULLSCREEN -> seleniumUtil.fullscreen();
-            case START_VIDEO -> seleniumUtil.startVideo();
+            case INIT -> selenium.init();
+            case VISIT -> selenium.visit(urlStr);
+            case QUIT -> selenium.quit();
+            case FULLSCREEN -> selenium.fullscreen();
+            case START_VIDEO -> selenium.startVideo();
         }
     }
 
