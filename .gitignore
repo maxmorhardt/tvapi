@@ -36,3 +36,4 @@ build/
 application-dev.properties
 firefox
 firefox/**
+.DS_Store
