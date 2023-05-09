@@ -25,8 +25,9 @@ public class StreamSelenium extends Selenium {
     @Override
     public void fullscreen() {
         logger.info("making stream video fullscreen...");
-        waitThreeSeconds();
-        clickByCssSelector("[aria-label=fullscreen]");
+        String selector = "[aria-label=fullscreen]";
+        waitByCssSelector(selector);
+        clickByCssSelector(selector);
     }
 
 }

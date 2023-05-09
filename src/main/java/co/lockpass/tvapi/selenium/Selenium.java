@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -171,6 +173,13 @@ public class Selenium {
         WebElement element = driver.findElement(By.className(className));
         element.click();
         logger.success("done clicking element with class name: " + className);
+    }
+
+    protected final void waitByCssSelector(String cssSelector) {
+        logger.start("waiting until element appears with selector: " + cssSelector);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT_SEC));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
+        logger.start("waiting until element appears with selector: " + cssSelector);
     }
 
 }
