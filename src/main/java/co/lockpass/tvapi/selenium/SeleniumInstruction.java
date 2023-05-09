@@ -4,5 +4,6 @@ public enum SeleniumInstruction {
     INIT,
     VISIT,
     FULLSCREEN,
-    QUIT;
+    QUIT,
+    START_VIDEO;
 }

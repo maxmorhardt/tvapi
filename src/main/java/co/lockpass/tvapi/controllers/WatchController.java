@@ -5,13 +5,12 @@ import co.lockpass.tvapi.loggerwrapper.LoggerFactory;
 import co.lockpass.tvapi.models.WatchRequest;
 import co.lockpass.tvapi.selenium.SeleniumManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/watch")
 public class WatchController {
 
     private final Logger logger = LoggerFactory.getLogger(WatchController.class);
@@ -19,12 +18,15 @@ public class WatchController {
     @Autowired
     private SeleniumManager seleniumManager;
 
-    @PostMapping("/watch")
+    @PostMapping("/youtube")
     public ResponseEntity<String> watchVideo(@RequestParam(required = false) String url, @RequestBody WatchRequest request) {
+        if (url != null && !url.contains("youtube")) {
+            return new ResponseEntity<>("invalid request for youtube", HttpStatus.BAD_REQUEST);
+        }
         logger.info("received request with url " + url + " and request " + request);
         logger.start("calling selenium");
         seleniumManager.runAllInstructions(request.getInstructions(), url);
-        return ResponseEntity.ok("got the stuff");
+        return new ResponseEntity<>("request completed", HttpStatus.OK);
     }
 
 }

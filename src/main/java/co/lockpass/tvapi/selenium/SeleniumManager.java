@@ -32,6 +32,7 @@ public class SeleniumManager {
             case VISIT -> seleniumUtil.visit(urlStr);
             case QUIT -> seleniumUtil.quit();
             case FULLSCREEN -> seleniumUtil.fullscreen();
+            case START_VIDEO -> seleniumUtil.startVideo();
         }
     }
 
