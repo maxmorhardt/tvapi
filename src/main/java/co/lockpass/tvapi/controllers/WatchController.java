@@ -18,6 +18,11 @@ public class WatchController {
     @Autowired
     private SeleniumManager seleniumManager;
 
+    @GetMapping("/ping")
+    public ResponseEntity<String> ping() {
+        return new ResponseEntity<>("/watch is online", HttpStatus.OK);
+    }
+
     @PostMapping("/youtube")
     public ResponseEntity<String> watchVideo(@RequestParam(required = false) String url, @RequestBody WatchRequest request) {
         if (url != null && !url.contains("youtube")) {
