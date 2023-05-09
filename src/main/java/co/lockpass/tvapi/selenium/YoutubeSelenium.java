@@ -1,6 +1,5 @@
-package co.lockpass.tvapi.selenium.youtube;
+package co.lockpass.tvapi.selenium;
 
-import co.lockpass.tvapi.selenium.Selenium;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -13,19 +12,9 @@ public class YoutubeSelenium extends Selenium {
     }
 
     @Override
-    public void startVideo() {
-        sendKeysByTagName(" ", "html");
-    }
-
-    @Override
-    public void pauseVideo() {
-        startVideo();
-    }
-
-    @Override
     public void fullscreen() {
-        final int FIVE_SECONDS_IN_MS = 5000;
-        syncWait(FIVE_SECONDS_IN_MS);
+        final int THREE_SECONDS_IN_MS = 3000;
+        syncWait(THREE_SECONDS_IN_MS);
         sendKeysByTagName("f", "html");
     }
 

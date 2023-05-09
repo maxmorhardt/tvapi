@@ -16,16 +16,16 @@ import java.io.File;
 import java.time.Duration;
 
 @Component("selenium")
-public abstract class Selenium {
+public class Selenium {
 
     private final Logger logger = LoggerFactory.getLogger(Selenium.class);
 
     private final String DRIVER_PATH;
     private final String PROFILE_PATH;
 
-    private final int TIMEOUT_SEC = 30;
+    protected final int TIMEOUT_SEC = 30;
 
-    private WebDriver driver;
+    protected WebDriver driver;
 
     public Selenium(@Autowired Environment env) {
         this.DRIVER_PATH = env.getProperty("driver.path");
@@ -93,14 +93,23 @@ public abstract class Selenium {
         }
     }
 
-    public abstract void startVideo();
+    /**
+     * Starts/pause video by press space
+     */
+    public void startVideo() {
+        sendKeysByTagName(" ", "html");
+    }
 
-    public abstract void pauseVideo();
+    public void pauseVideo() {
+        startVideo();
+    }
 
     /**
-     * Puts a video in full screen (needs to be overrided for different platforms)
+     * Puts video in full screen
      */
-    public abstract void fullscreen();
+    public void fullscreen() {
+        return;
+    }
 
     /**
      * Synchronously waits for a given period of time (good for slow loading websites)
@@ -127,6 +136,16 @@ public abstract class Selenium {
     protected final void sendKeysByTagName(String keys, String tagName) {
         WebElement element = driver.findElement(By.tagName(tagName));
         element.sendKeys(keys);
+    }
+
+    /**
+     * Finds and clicks based on css selector
+     *
+     * @param cssSelector css selector of element
+     */
+    protected final void clickByCssSelector(String cssSelector) {
+        WebElement element = driver.findElement(By.cssSelector(cssSelector));
+        element.click();
     }
 
 }
