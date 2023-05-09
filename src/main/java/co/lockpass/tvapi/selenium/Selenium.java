@@ -25,12 +25,11 @@ public class Selenium {
 
     protected final int TIMEOUT_SEC = 30;
 
-    protected WebDriver driver;
+    protected static WebDriver driver;
 
     public Selenium(@Autowired Environment env) {
         this.DRIVER_PATH = env.getProperty("driver.path");
         this.PROFILE_PATH = env.getProperty("profile.path");
-        init();
     }
 
     /**
@@ -84,8 +83,8 @@ public class Selenium {
      * Quits the driver (can be initialized again)
      */
     public void quit() {
+        logger.start("======== quitting driver ========");
         if (driver != null) {
-            logger.start("======== quitting driver ========");
             driver.quit();
             logger.success("======== successfully quit driver ========");
         } else {
@@ -97,17 +96,22 @@ public class Selenium {
      * Starts/pause video by press space
      */
     public void startVideo() {
+        logger.start("starting video");
         sendKeysByTagName(" ", "html");
+        logger.success("done starting video");
     }
 
     public void pauseVideo() {
+        logger.start("pausing video");
         startVideo();
+        logger.success("done pausing video");
     }
 
     /**
      * Puts video in full screen
      */
     public void fullscreen() {
+        logger.warn("fullscreen has no implementation for this endpoint");
         return;
     }
 
@@ -117,6 +121,7 @@ public class Selenium {
      * @param waitTimeMs time in milliseconds to wait
      */
     protected final void syncWait(int waitTimeMs) {
+        logger.start("waiting for " + waitTimeMs + " ms");
         synchronized (driver) {
             try {
                 driver.wait(waitTimeMs);
@@ -125,6 +130,15 @@ public class Selenium {
                 throw new RuntimeException(e);
             }
         }
+        logger.success("done waiting for " + waitTimeMs + " ms");
+    }
+
+    /**
+     * Uses sync wait to wait three seconds (typically things will load within this time)
+     */
+    protected final void waitThreeSeconds() {
+        final int THREE_SECONDS_IN_MS = 3000;
+        syncWait(THREE_SECONDS_IN_MS);
     }
 
     /**
@@ -134,8 +148,10 @@ public class Selenium {
      * @param tagName name of html tag
      */
     protected final void sendKeysByTagName(String keys, String tagName) {
+        logger.start("sending keys " + keys + " to tag " + tagName);
         WebElement element = driver.findElement(By.tagName(tagName));
         element.sendKeys(keys);
+        logger.success("done sending keys " + keys + " to tag " + tagName);
     }
 
     /**
@@ -144,8 +160,17 @@ public class Selenium {
      * @param cssSelector css selector of element
      */
     protected final void clickByCssSelector(String cssSelector) {
+        logger.start("clicking element with selector: " + cssSelector);
         WebElement element = driver.findElement(By.cssSelector(cssSelector));
         element.click();
+        logger.success("done clicking element with selector: " + cssSelector);
+    }
+
+    protected final void clickByClassName(String className) {
+        logger.start("clicking element with class name: " + className);
+        WebElement element = driver.findElement(By.className(className));
+        element.click();
+        logger.success("done clicking element with class name: " + className);
     }
 
 }

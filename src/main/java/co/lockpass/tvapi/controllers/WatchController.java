@@ -50,7 +50,7 @@ public class WatchController {
      * @return response entity with message once selenium has completed running
      */
     private ResponseEntity<String> watch(String url, WatchRequest request, SeleniumType type) {
-        logger.info("received request with url " + url + " and request " + request);
+        logger.info("received request with url " + url + " and request " + request + " for type " + type);
         seleniumManager.runAllInstructions(request.getInstructions(), url, type);
         return new ResponseEntity<>("request completed", HttpStatus.OK);
     }
